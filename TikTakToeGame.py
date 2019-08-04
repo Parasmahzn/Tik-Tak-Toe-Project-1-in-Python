@@ -9,6 +9,16 @@ import random
 
 def display_board(board):
     
+    if board[0]=='#':
+        print('\n')
+        print('\t    |     |     ')
+        print('\t----|-----|-----')
+        print('\t    |     |     ')
+        print('\t----|-----|-----')
+        print('\t    |     |     ')
+        pass
+        
+    else:
         print('\n')
 #        print('\n'*100)
         print('\t '+board[7]+' | '+board[8]+' | '+ board[9])
@@ -28,7 +38,7 @@ def player_input():
         marker=''
         #Keep asking player one to choose X or O
         while marker !='X' and marker !='O':
-            marker=input("Player 1, Choose X or O: ")
+            marker=input("PLAYER 1:  Choose X or O: ")
         #Choosing alternate marker for Player 2
         if marker =='X':
             return {'P1': 'X','P2':'O'}
@@ -99,13 +109,13 @@ def win_check(board,mark):
 def choose_first():
     start_player = random.randint(1,2)
     if(start_player==1):
-        return "Player 1"
+        return "PLAYER 1"
     else:
-        return "Player 2"
+        return "PLAYER 2"
     
 #Checking whether a space on the board is available to put a mark on    
 def space_check(board,position):
-    return (board[position]=="")
+    return (board[position]==" ")
 
 
 #Cheking if the board is full or not?
@@ -115,7 +125,7 @@ def full_board_check(board):
 
 #Asking for players next positions (as a number 1-9) and then uses the function from step 6 to check if it's a free position. If it is, then return the position for later use.
 def player_choice(board):
-    choice=0
+    #choice=0
     while choice >10 and choice<=0:
         choice= int(input('Enter your next position:[1-9]  ' ))
     if(space_check(board,choice)):
@@ -131,3 +141,40 @@ def replay():
     else:
         pass
     
+
+#Main Execution of Tik Tac Toe
+print('\n\n\nWELCOME to TIC TAC TOE!\n')
+board=['#',' ',' ',' ',' ',' ',' ',' ',' ',' '] #initially the board set is null
+players_markers=player_input() # Taking markers input from Player 1
+fPlayer=choose_first() # Random start between Player 1 and Player 2
+choice=0
+
+print(f'\n{fPlayer} will go first')
+play=input('Are you ready to play? [Yes(Y)/No(N)]]  :')
+if(play.upper()=='YES' or play.upper()=='Y'):
+    display_board(board)
+    choice= int(input(f'\n{fPlayer} : Enter your first position [1-9]: '))
+elif(play.upper()=='NO' or play.upper()=='N'):
+    if(fPlayer=='1'):
+        print(f' \nPlayer 2 will go first')
+        fPlayer='Player 2'
+        display_board(board)
+        choice= int(input(f'\n{fPlayer} : Enter your first position [1-9]: '))
+        
+    else:
+        print(' \nPlayer 1 will go first')
+        fPlayer='Player 1'
+        display_board(board)
+        choice= int(input(f'\n{fPlayer} : Enter your first position [1-9]: '))
+        
+else:
+    pass
+
+#Checking if space is available to put the markers
+if(space_check(board,choice)):
+    board[0]='&'
+    print('You can place it')
+    
+else:
+    print('This place is already occupied')
+
